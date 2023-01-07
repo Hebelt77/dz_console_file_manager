@@ -1,4 +1,5 @@
 import actions_folder_files
+import my_bank_account
 import victory_to_manager
 
 print("Добро пожаловать в файловый менеджер")
@@ -50,7 +51,8 @@ while True:
         victory_to_manager.victory()
 
     if point == '10':
-        pass
+        my_bank_account.bank_account()
+
     if point == '11':
         pass
     if point == '12':
