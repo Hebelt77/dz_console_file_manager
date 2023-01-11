@@ -2,24 +2,22 @@ import os
 import shutil
 
 
-def create_folder():  # Создание папки
-    name_folder = input("Введите название папки: ")
-    if os.path.exists(name_folder):  # Проверка на наличие такого имени
+def create_folder(name):  # Создание папки
+    if os.path.exists(name):  # Проверка на наличие такого имени
         print("Папка с таким именем существует!")
     else:
-        os.mkdir(name_folder)
+        os.mkdir(name)
 
 
-def delete_folder_files():  # Удаляет файл или папку со всем её содержимым
-    name_item = input("Введите название папки или файла: ")
-    if not os.path.exists(name_item):  # Проверка на наличие такого имени
+def delete_folder_files(name):  # Удаляет файл или папку со всем её содержимым
+    if not os.path.exists(name):  # Проверка на наличие такого имени
         print(f'''
 Папки или файла с таким именем не существует!
 ''')
-    elif os.path.isfile(name_item):
-        os.remove(name_item)
+    elif os.path.isfile(name):
+        os.remove(name)
     else:
-        shutil.rmtree(name_item, ignore_errors=True)
+        shutil.rmtree(name, ignore_errors=True)
         # os.rmdir(name_folder)
 
 
@@ -46,8 +44,7 @@ def copy_folder_files(item, new_item):  # Копирует файл или па�
         shutil.copytree(item, new_item)  # Копирует папки item со всем содержимым присваивая им новое имя new_item
 
 
-def directory_change():  # Смена рабочей директории
-    name = input("Введите название рабочей директории: ")
+def directory_change(name):  # Смена рабочей директории
     if not os.path.exists(name):
         print("Папки с таким именем не существует!")
     else:
@@ -60,7 +57,7 @@ def content_directory():  # Выводит содержимое рабочей �
     print("Вы находитесь в этой директории ↓↓↓")
     print(os.getcwd())
     print("Содержимое этой директории ↓↓↓")
-    print(os.listdir(path=os.getcwd()))
+    return os.listdir(path=os.getcwd())
 
 
 def rename_folder_files():  # Переименовывает папку или файл
@@ -75,9 +72,9 @@ def rename_folder_files():  # Переименовывает папку или �
 if __name__ == "__main__":
     # print(os.name)
     # print(os.listdir())
-    # os.rmdir('new')
-    # os.mkdir('new')
-    # os.remove('file') #
+    # os.rmdir('new')       # Удаляет пустую папку
+    # os.mkdir('new')       # Создаёт пустую папку
+    # os.remove('file')     # Удаляет файл
     # create_folder()
     # delete_folder_files()
     # print(os.path.isfile('file'))

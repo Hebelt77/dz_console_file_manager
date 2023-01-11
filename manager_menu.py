@@ -23,10 +23,12 @@ while True:
 
     point = input('>>: ')
     if point == '1':
-        actions_folder_files.create_folder()
+        name_folder = input("Введите название папки: ")
+        actions_folder_files.create_folder(name_folder)
 
     if point == '2':
-        actions_folder_files.delete_folder_files()
+        name_folder_files = input("Введите название папки или файла: ")
+        actions_folder_files.delete_folder_files(name_folder_files)
 
     if point == '3':
         name = input("Введите название файла или папки которую нужно скопировать: ")
@@ -34,10 +36,11 @@ while True:
         actions_folder_files.copy_folder_files(name, new_name)
 
     if point == '4':
+        item = input("Введите название папки или файла для переименования: ")
         actions_folder_files.rename_folder_files()
 
     if point == '5':
-        actions_folder_files.content_directory()
+        print(actions_folder_files.content_directory())
 
     if point == '6':
         actions_folder_files.filter_folder_files('folder')
@@ -60,7 +63,8 @@ email: hebelt@mail.ru
         my_bank_account.bank_account()
 
     if point == '12':
-        actions_folder_files.directory_change()
+        name = input("Введите название рабочей директории: ")
+        actions_folder_files.directory_change(name)
 
     if point == '13':
         break
