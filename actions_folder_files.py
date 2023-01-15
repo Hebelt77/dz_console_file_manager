@@ -1,3 +1,4 @@
+import json
 import os
 import shutil
 
@@ -32,9 +33,9 @@ def filter_folder_files(selection):  # Выводит список файлов 
         if os.path.isdir(i):  # Добавить в список если является папкой
             folder.append(i)
     if selection == 'file':  # Возвращает список в зависимости от параметра
-        return print(file)
+        return file
     elif selection == 'folder':
-        return print(folder)
+        return folder
 
 
 def copy_folder_files(item, new_item):  # Копирует файл или папку item присваивая новое имя new_item
@@ -69,7 +70,22 @@ def rename_folder_files():  # Переименовывает папку или �
         print("Папка или файл с таким именем не найдены!")
 
 
+def safe_content_directory(name):       # Сохраняет содержимое рабочей директории в указанный файл
+    files = filter_folder_files('file')  # Функция возвращает список файлов
+    folders = filter_folder_files('folder')  # Функция возвращает список папок
+    str_files = 'files: ' + ', '.join(files)  # Собираем строки, сохраняем в переменные
+    str_folders = 'dirs: ' + ', '.join(folders)
+    with open(name, 'w') as f:  # Записываем строки в файл
+        f.write(f'{str_files} \n')
+        f.write(str_folders)
+
+#   json.dump((f'{str_files} \n{str_folders}'), f)   # Вариант с переводом строк в формат json
+#   with open('listdir.txt', 'r') as f:              # Позволяет восстанавливать данные в первоначальный вид
+#        print(json.load(f))                         # но вид содержимого файла менее читабелен!
+
+
 if __name__ == "__main__":
+    safe_content_directory('listdir.txt')
     # print(os.name)
     # print(os.listdir())
     # os.rmdir('new')       # Удаляет пустую папку
@@ -84,7 +100,7 @@ if __name__ == "__main__":
     # print(os.listdir(path='folder'))    # Список папок и файлов в конкретной директории
     # os.chdir('folder')  # Смена рабочей директории
     # print(os.getcwd())  # Текущая рабочая деректория
-    # filter_folder_files('file')
-    rename_folder_files()
+    filter_folder_files('file')
+    # rename_folder_files()
     # print(os.path.join(os.path.abspath(os.path.dirname('first_folder')), 'first folder'))
     # path = os.path.join(os.path.abspath(os.path.dirname(item)), item) # Возвращает путь к директории по имени папки или файла

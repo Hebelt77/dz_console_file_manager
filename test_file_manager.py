@@ -1,12 +1,10 @@
 import os.path
 
-from actions_folder_files import create_folder
-from actions_folder_files import delete_folder_files
-from actions_folder_files import copy_folder_files
+from actions_folder_files import create_folder, delete_folder_files, copy_folder_files, safe_content_directory
 from actions_folder_files import rename_folder_files
 from actions_folder_files import content_directory
 from actions_folder_files import directory_change
-from my_bank_account import history_bay
+from my_bank_account import history_buy, load_unload_file
 
 
 def test_create_folder():
@@ -48,6 +46,22 @@ def test_copy_folder_files():
 #     directory_change('Консольный файловый менеджер')
 
 
-def test_history_bay():
-    result = history_bay({"Пальто": 12000})
-    assert result == ['Пальто - 12000 рублей.']
+def test_history_buy():
+    result = history_buy({"Пальто": 12000})
+    assert result == ['1.) Пальто - 12000 рублей.']
+
+
+def test_load_unload_file():
+    file = 'test file.txt'
+    test_buy = {"Пальто": 12000}
+    load_unload_file(file, test_buy, 'w')
+    assert os.path.exists(file)
+    assert load_unload_file(file, test_buy, 'r') == test_buy
+    delete_folder_files(file)
+
+
+def test_safe_content_directory():
+    safe_content_directory('testdir.txt')
+    assert os.path.exists('testdir.txt')
+    delete_folder_files('testdir.txt')
+

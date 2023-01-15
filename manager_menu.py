@@ -14,12 +14,13 @@ while True:
 5. просмотр содержимого рабочей директории
 6. посмотреть только папки
 7. посмотреть только файлы
-8. просмотр информации об операционной системе
-9. создатель программы
-10. играть в викторину
-11. мой банковский счет
-12. смена рабочей директории
-13 выход.''')
+8. сохранить содержимое рабочей директории в файл
+9. просмотр информации об операционной системе
+10. создатель программы
+11. играть в викторину
+12. мой банковский счет
+13. смена рабочей директории
+14 выход.''')
 
     point = input('>>: ')
     if point == '1':
@@ -43,28 +44,32 @@ while True:
         print(actions_folder_files.content_directory())
 
     if point == '6':
-        actions_folder_files.filter_folder_files('folder')
+        print(actions_folder_files.filter_folder_files('folder'))
 
     if point == '7':
-        actions_folder_files.filter_folder_files('file')
+        print(actions_folder_files.filter_folder_files('file'))
 
     if point == '8':
+        name = input("Введите название файла: ")
+        actions_folder_files.safe_content_directory(name)
+
+    if point == '9':
         import sys
         print(sys.platform)
 
-    if point == '9':
+    if point == '10':
         print(f'''Создатель программы: Dziuba Nikolai Sergeevich
 email: hebelt@mail.ru
 ''')
-    if point == '10':
+    if point == '11':
         victory_to_manager.victory()
 
-    if point == '11':
+    if point == '12':
         my_bank_account.bank_account()
 
-    if point == '12':
+    if point == '13':
         name = input("Введите название рабочей директории: ")
         actions_folder_files.directory_change(name)
 
-    if point == '13':
+    if point == '14':
         break
