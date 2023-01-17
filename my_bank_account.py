@@ -2,13 +2,30 @@ import json
 import os.path
 
 
+def add_separator(f):
+    def inner(*args, **qwargs):
+        print('\\/' * 15)
+        result = f(*args, **qwargs)
+        return result
+
+    return inner
+
+
+@add_separator
 def history_buy(buy):  # Функция собирает строки для вывода истории покупок
     thing = list(buy.keys())
-    cost = list(map(lambda x: str(x) + " рублей.", buy.values()))
-    history = []
 
-    for index, item in enumerate(thing):
-        history.append(str(index + 1) + '.) ' + item + ' - ' + cost[index])
+    # cost = list(map(lambda x: str(x) + " рублей.", buy.values()))     # Вариант с lambda функцией
+
+    cost = [str(i) + " рублей." for i in buy.values()]  # Вариант с генератором списка
+
+    # Вариант с циклом↓↓↓
+    # history = []
+    # for index, item in enumerate(thing):
+    #     history.append(str(index + 1) + '.) ' + item + ' - ' + cost[index])
+
+    # Вариант с генератором списка↓↓↓
+    history = [str(index + 1) + '.) ' + item + ' - ' + cost[index] for index, item in enumerate(thing)]
 
     return history
 
@@ -35,7 +52,7 @@ def bank_account():
     balance = 'account balance.txt'
 
     buy = load_unload_file(history, buy, 'r')  # Записываем результаты загрузки файлов в переменные
-    check = load_unload_file(balance, check, 'r')   # Если файлов не существует, возвращает значения переменных
+    check = load_unload_file(balance, check, 'r')  # Если файлов не существует, возвращает значения переменных
 
     while True:
         print(f"На вашем счету {check} рублей")
@@ -49,9 +66,11 @@ def bank_account():
         if choice == '1':
             try:
                 check += int(input("На какую сумму хотите пополнить счёт?: "))
-            except:
+            except ValueError:
                 print("Введите числовое значение!")
                 continue
+            except Exception:
+                print("Неизвестная ошибка!!!")
             # print(f"На вашем счету {check} рублей.")
 
         elif choice == '2':
@@ -67,8 +86,9 @@ def bank_account():
                 check -= price
                 buy[name_buy] = price
 
-        elif choice == '3':
-            print("<<Список ваших покупок>>")
+        elif choice == '3':  # Вариант в тернарными операторами↓↓↓
+            print("<< Вы ещё не совершили ни одной покупки:( >>") if not buy else print("<<Список ваших покупок>>")
+            # print("<<Список ваших покупок>>")    # Проверка на пустой словарь↑↑↑
             for i in (history_buy(buy)):
                 print(i)
 
@@ -90,6 +110,10 @@ def bank_account():
 if __name__ == '__main__':
     buy = {'a': 1000, 'b': 4000}
     bay = {'a': 1000, 'b': 4000}
+
+    # print(history_buy(buy))
+    bank_account()
+
     with open('history bay.txt', 'w') as f:  # Открываем файл в режиме записи
         json.dump(buy, f)  # Кодируем данные в формат json и записываем в файл
 

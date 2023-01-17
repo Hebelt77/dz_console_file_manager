@@ -5,6 +5,7 @@ from actions_folder_files import rename_folder_files
 from actions_folder_files import content_directory
 from actions_folder_files import directory_change
 from my_bank_account import history_buy, load_unload_file
+from victory_to_manager import random_people
 
 
 def test_create_folder():
@@ -33,6 +34,11 @@ def test_copy_folder_files():
     delete_folder_files('copy_folder')
     delete_folder_files('test_file.txt')
     delete_folder_files('copy_file.txt')
+
+
+def test_random_people():
+    assert len(random_people()) == 5
+    assert len(random_people()) == len(set(random_people()))
 
 
 # def test_content_directory():  # При запуске проходит тест, но в конце выдаёт несколько ошибок

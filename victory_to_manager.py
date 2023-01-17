@@ -1,36 +1,48 @@
-﻿def victory():
+﻿import locale
+import datetime as DT
 
+locale.setlocale(locale.LC_ALL, 'ru')
+
+
+def random_people():
     people = ["Исаак Ньютон", "Альберт Эйнштейн", "Никола Тесла", "Томас Эдисон", "Константин Циолковский",
               "Александр Пушкин", "Вольфганг Моцарт", "Людвиг Бетховен", "Сергей Королёв", "Юрий Гагарин"]
 
     year_of_birth = ["04.01.1643", "14.03.1879", "10.07.1856", "11.02.1847", "17.09.1857",
                      "06.06.1799", "27.01.1756", "17.12.1770", "12.01.1907", "09.03.1934"]
 
-    year_of_birth_word = ["Четвёртое января 1643 года", "Четырнадцатое марта 1879 года", "Десятое июля 1856 года",
-                          "Одиннадцатое февраля 1847 года", "Семнадцатое сентября 1857 года", "Шестое июня 1799 года",
-                          "Двадцать седьмое января 1756 года", "Семнадцатое декабря 1770 года",
-                          "Двенадцатое января 1907 года",
-                          "Девятое марта 1934 года"]
-
+    people_birth = [(k, year_of_birth[i]) for i, k in enumerate(people)]
     import random
+    result = random.sample(people_birth, 5)
+    return result
 
-    numbers = [i for i in range(10)]
-    end = None
 
-    while end != "нет":
 
-        result = random.sample(numbers, 5)
+
+def victory():
+
+    while True:
+
+        result = random_people()
         total_true = 0
         total_false = 0
 
-        for index in result:
-            answer = input(f"Введите дату рождения {people[index]} в формате 'dd.mm.yyyy': ")
-            if answer == year_of_birth[index]:
+        for name, date in result:
+            answer = input(f"Введите дату рождения {name} в формате 'dd.mm.yyyy': ")
+            if answer == date:
                 total_true += 1
             else:
                 total_false += 1
-                print(f"Неверно!, Правильный ответ: {year_of_birth_word[index]}")
+                date = DT.datetime.strptime(date, '%d.%m.%Y').date()
+                print(f"Неверно!, Правильный ответ: {date.strftime('%d %B %Y года')}")
 
-        print(f"""Количество правильных ответов: {total_true}
+        print(f"""    Количество правильных ответов: {total_true}
     Количество неправильных ответов: {total_false}""")
         end = (input("Хотите начать заново?: 'Да/Нет': ")).lower()
+        if end == 'нет':
+            break
+
+
+if __name__ == '__main__':
+    import random
+    victory()
